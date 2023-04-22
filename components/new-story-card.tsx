@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useStoryStore } from '@/src/store';
 import { Plus } from 'lucide-react';
 import { Story } from '@/types/story';
@@ -10,9 +10,21 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { useToast } from './ui/use-toast';
 
 export default function NewStoryCard(story: Story) {
   const { addStory } = useStoryStore();
+  const [isSaved, setIsSaved] = useState(false);
+  const { toast } = useToast();
+
+  const handleAddStory = () => {
+    addStory(story);
+    setIsSaved(true);
+    toast({
+      description: `"${story.title}" is saved to your collection.`,
+    });
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -21,9 +33,9 @@ export default function NewStoryCard(story: Story) {
             <CardTitle className="mb-1">{story.title}</CardTitle>
             <CardDescription>{`A ${story.genre} story`}</CardDescription>
           </div>
-          <Button onClick={() => addStory(story)} variant="outline">
-            <Plus className="mr-2 h-4 w-4" />
-            Save story
+          <Button onClick={handleAddStory} variant="outline" disabled={isSaved}>
+            {!isSaved && <Plus className="mr-2 h-4 w-4" />}
+            {isSaved ? 'Saved!' : 'Save story'}
           </Button>
         </div>
       </CardHeader>
