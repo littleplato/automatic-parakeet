@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { genres } from '@/utils/consts';
+import { Loader2 } from 'lucide-react';
 import useMakeStory from '@/hooks/useMakeStory';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,10 +12,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import NewStoryCard from '@/components/new-story-card';
 
 export default function IndexPage() {
-  const { handleSubmit, isLoading, story, isError, title, genre, url } =
-    useMakeStory();
+  const { handleSubmit, isLoading, isError, ...story } = useMakeStory();
   return (
     <section className="container grid items-center pb-8 pt-6 md:py-10">
       <form onSubmit={handleSubmit}>
@@ -39,20 +39,15 @@ export default function IndexPage() {
             </SelectContent>
           </Select>
           <Button className="min-w-[140px]" type="submit" disabled={isLoading}>
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {isLoading ? 'Generating...' : 'Make Story'}
           </Button>
         </div>
       </form>
       <div className="my-4" />
-      {isLoading && `Generating a ${genre} story: ${title}`}
+      {isLoading && `Generating a ${story.genre} story: ${story.title}`}
       {isError && 'Something went wrong. Please try again.'}
-      {story && <h2 className="text-lg font-bold">{title}</h2>}
-      <div className="flex space-x-4">
-        <div className="basis-2/3">{story && <h5>{story}</h5>}</div>
-        <div className="basis-1/3">
-          {url && <img src={url} alt="Story image" width="500" height="500" />}
-        </div>
-      </div>
+      {!isLoading && !isError && story.story && <NewStoryCard {...story} />}
     </section>
   );
 }

@@ -23,9 +23,10 @@ export default async function handler(
 
   const completion = await openai.createCompletion({
     model: 'text-davinci-003',
-    prompt: `Create a short ${genre} story based on the following topic.\n
-    Topic: ${prompt}\n
-    Story:`,
+    prompt: `Create a short ${genre} story based on the following topic: ${prompt}. 
+    This story should align to principles of Joseph Campbell's "Hero's Journey" structure. 
+    Use descriptive, visual words that would make it easy to convert into a children's book.
+    Keep the story to no more than 200 words.`,
     max_tokens: 500,
     temperature: 1,
     presence_penalty: 0,
