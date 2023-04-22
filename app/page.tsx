@@ -1,38 +1,21 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import Image from 'next/image';
+import { genres } from '@/utils/consts';
+import useMakeStory from '@/hooks/useMakeStory';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 export default function IndexPage() {
-  const [quote, setQuote] = useState('');
-  const [quoteLoading, setQuoteLoading] = useState(false);
-  const [quoteLoadingError, setQuoteLoadingError] = useState(false);
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const prompt = formData.get('prompt')?.toString().trim();
-
-    if (prompt) {
-      try {
-        setQuote('');
-        setQuoteLoadingError(false);
-        setQuoteLoading(true);
-
-        const response = await fetch(
-          '/api/storymaker?prompt=' + encodeURIComponent(prompt)
-        );
-        const body = await response.json();
-        setQuote(body.quote);
-        // console.log(body.original);
-      } catch (error) {
-        console.error(error);
-        setQuoteLoadingError(true);
-      } finally {
-        setQuoteLoading(false);
-      }
-    }
-  }
+  const { handleSubmit, isLoading, story, isError, title, genre, url } =
+    useMakeStory();
   return (
     <section className="container grid items-center pb-8 pt-6 md:py-10">
       <form onSubmit={handleSubmit}>
@@ -43,19 +26,29 @@ export default function IndexPage() {
             placeholder="Enter the title of your story"
             maxLength={100}
           />
-          <Button
-            className="min-w-[140px]"
-            type="submit"
-            disabled={quoteLoading}
-          >
-            Create a story!
+          <Select name="genre">
+            <SelectTrigger className="w-[200px]">
+              <SelectValue placeholder="Select genre" />
+            </SelectTrigger>
+            <SelectContent>
+              {genres.map((genre) => (
+                <SelectItem key={genre.value} value={genre.value}>
+                  {genre.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button className="min-w-[140px]" type="submit" disabled={isLoading}>
+            {isLoading ? 'Generating...' : 'Make Story'}
           </Button>
         </div>
       </form>
       <div className="my-4" />
-      {quoteLoading && 'Loading...'}
-      {quoteLoadingError && 'Something went wrong. Please try again.'}
-      {quote && <h5>{quote}</h5>}
+      {isLoading && `Generating a ${genre} story: ${title}`}
+      {isError && 'Something went wrong. Please try again.'}
+      {story && <h2 className="text-lg font-bold">{title}</h2>}
+      {story && <h5>{story}</h5>}
+      {url && <Image src={url} alt="Story image" width="100" height="100" />}
     </section>
   );
 }

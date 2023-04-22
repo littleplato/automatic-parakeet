@@ -21,18 +21,13 @@ export default async function handler(
     return res.status(400).json({ error: 'Prompt too long' });
   }
 
-  const completion = await openai.createCompletion({
-    model: 'text-davinci-003',
-    prompt: `Create a short, cute motivational story based on the following topic.\n
-    Topic: ${prompt}\n
-    Cringy motivational quote:`,
-    max_tokens: 500,
-    temperature: 1,
-    presence_penalty: 0,
-    frequency_penalty: 0,
+  const response = await openai.createImage({
+    prompt: `An illustration of the topic: ${prompt}`,
+    n: 1,
+    size: '1024x1024',
   });
 
-  const quote = completion.data.choices[0].text;
+  const url = response.data.data[0].url;
 
-  res.status(200).json({ quote });
+  res.status(200).json({ url });
 }
