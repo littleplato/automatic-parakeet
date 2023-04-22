@@ -32,7 +32,13 @@ export default function NewStoryCard(story: Story) {
           <div className="md:basis-2/3">{story && <h5>{story.story}</h5>}</div>
           <div className="md:basis-1/3">
             {story.url && (
-              <img className="rounded-md" src={story.url} alt="Story image" />
+              <img
+                className="rounded-md"
+                src={story.url}
+                alt="Story image"
+                width="500"
+                height="500"
+              />
             )}
           </div>
         </div>
