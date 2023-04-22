@@ -20,6 +20,7 @@ export default function useMakeStory() {
       setTitle(prompt);
       try {
         setStory('');
+        setUrl('');
         setIsError(false);
         setIsLoading(true);
         const story = await fetch(
@@ -28,10 +29,11 @@ export default function useMakeStory() {
         const body = await story.json();
         const summary = body.story.substring(0, body.story.search(/\./g));
         const image = await fetch(
-          generateURL('/api/story', { prompt: summary })
+          generateURL('/api/image', { prompt: summary })
         );
+        const imageUrl = await image.json();
         setStory(body.story);
-        setUrl(image.url);
+        setUrl(imageUrl.url);
       } catch (error) {
         console.error(error);
         setIsError(true);

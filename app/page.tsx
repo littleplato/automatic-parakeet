@@ -47,8 +47,12 @@ export default function IndexPage() {
       {isLoading && `Generating a ${genre} story: ${title}`}
       {isError && 'Something went wrong. Please try again.'}
       {story && <h2 className="text-lg font-bold">{title}</h2>}
-      {story && <h5>{story}</h5>}
-      {url && <Image src={url} alt="Story image" width="100" height="100" />}
+      <div className="flex space-x-4">
+        <div className="basis-2/3">{story && <h5>{story}</h5>}</div>
+        <div className="basis-1/3">
+          {url && <img src={url} alt="Story image" width="500" height="500" />}
+        </div>
+      </div>
     </section>
   );
 }

@@ -17,10 +17,6 @@ export default async function handler(
     return res.status(400).json({ error: 'Prompt missing' });
   }
 
-  if (prompt.length > 100) {
-    return res.status(400).json({ error: 'Prompt too long' });
-  }
-
   const response = await openai.createImage({
     prompt: `An illustration of the topic: ${prompt}`,
     n: 1,
