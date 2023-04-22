@@ -1,9 +1,16 @@
 'use client';
 
-import Image from 'next/image';
 import { genres } from '@/utils/consts';
+import { Loader2, Plus } from 'lucide-react';
 import useMakeStory from '@/hooks/useMakeStory';
 import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -39,6 +46,7 @@ export default function IndexPage() {
             </SelectContent>
           </Select>
           <Button className="min-w-[140px]" type="submit" disabled={isLoading}>
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {isLoading ? 'Generating...' : 'Make Story'}
           </Button>
         </div>
@@ -46,13 +54,32 @@ export default function IndexPage() {
       <div className="my-4" />
       {isLoading && `Generating a ${genre} story: ${title}`}
       {isError && 'Something went wrong. Please try again.'}
-      {story && <h2 className="text-lg font-bold">{title}</h2>}
-      <div className="flex space-x-4">
-        <div className="basis-2/3">{story && <h5>{story}</h5>}</div>
-        <div className="basis-1/3">
-          {url && <img src={url} alt="Story image" width="500" height="500" />}
-        </div>
-      </div>
+      {!isLoading && !isError && story && (
+        <Card>
+          <CardHeader>
+            <div className="flex">
+              <div className="grow">
+                <CardTitle>{title}</CardTitle>
+                <CardDescription>{`A ${genre} story`}</CardDescription>
+              </div>
+              <Button variant="outline">
+                <Plus className="mr-2 h-4 w-4" />
+                Save story
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col-reverse space-y-4 md:flex-row space-x-4">
+              <div className="md:basis-2/3">{story && <h5>{story}</h5>}</div>
+              <div className="md:basis-1/3">
+                {url && (
+                  <img src={url} alt="Story image" width="500" height="500" />
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </section>
   );
 }
