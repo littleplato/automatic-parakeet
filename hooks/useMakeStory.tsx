@@ -1,10 +1,11 @@
 import React, { FormEvent, useState } from 'react';
-import { generateURL } from '@/utils/utils';
+import { generateURL, generateUUID } from '@/utils/utils';
 
 export default function useMakeStory() {
   const [story, setStory] = useState('');
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
+  const [id, setId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [url, setUrl] = useState('');
@@ -14,10 +15,10 @@ export default function useMakeStory() {
     const formData = new FormData(e.target as HTMLFormElement);
     const prompt = formData.get('prompt')?.toString().trim();
     const type = formData.get('genre')?.toString().trim() || 'heroic';
-    setGenre(type || '');
 
     if (prompt) {
       setTitle(prompt);
+      setGenre(type || '');
       try {
         setStory('');
         setUrl('');
@@ -34,6 +35,7 @@ export default function useMakeStory() {
         const imageUrl = await image.json();
         setStory(body.story);
         setUrl(imageUrl.url);
+        setId(generateUUID());
       } catch (error) {
         console.error(error);
         setIsError(true);
@@ -42,5 +44,5 @@ export default function useMakeStory() {
       }
     }
   }
-  return { handleSubmit, isLoading, story, isError, title, genre, url };
+  return { handleSubmit, isLoading, story, isError, title, genre, url, id };
 }

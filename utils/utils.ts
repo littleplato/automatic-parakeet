@@ -7,3 +7,5 @@ export const generateURL = (
     .join('&');
   return baseURL + '?' + stringifiedParams;
 };
+
+export const generateUUID = () => crypto.randomUUID();
