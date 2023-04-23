@@ -18,7 +18,7 @@ export default function useMakeStory() {
 
     if (prompt) {
       setTitle(prompt);
-      setGenre(type || '');
+      setGenre(type);
       try {
         setStory('');
         setUrl('');

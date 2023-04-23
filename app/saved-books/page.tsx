@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useStoryStore } from '@/src/store';
-import BasicStoryCard from '@/components/basic-story-card';
+import StoryCard from '@/components/story-card';
 
 const Title = ({ numberOfStories }: { numberOfStories: number }) => {
   let title = '';
@@ -25,7 +25,7 @@ export default function SavedBooksPage() {
       <div className="flex-col space-y-4">
         <Title numberOfStories={stories.length} />
         {stories.map((story) => (
-          <BasicStoryCard key={story.id} {...story} />
+          <StoryCard key={story.id} {...story} />
         ))}
       </div>
     </section>

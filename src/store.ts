@@ -22,7 +22,7 @@ export const useStoryStore = create<StoryStore>((set) => ({
   removeStory(story: Story) {
     set((state) => ({
       ...state,
-      stories: state.stories.filter((s) => s.title !== story.title),
+      stories: state.stories.filter((s) => s.id !== story.id),
     }));
   },
 }));

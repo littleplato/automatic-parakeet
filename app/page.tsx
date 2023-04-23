@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import NewStoryCard from '@/components/new-story-card';
+import StoryCard from '@/components/story-card';
 
 export default function IndexPage() {
   const { handleSubmit, isLoading, isError, ...story } = useMakeStory();
@@ -25,6 +25,7 @@ export default function IndexPage() {
             type="text"
             placeholder="Enter the title of your story"
             maxLength={100}
+            autoComplete="off"
           />
           <Select name="genre">
             <SelectTrigger className="w-[200px]">
@@ -47,7 +48,9 @@ export default function IndexPage() {
       <div className="my-4" />
       {isLoading && `Generating a ${story.genre} story: ${story.title}`}
       {isError && 'Something went wrong. Please try again.'}
-      {!isLoading && !isError && story.story && <NewStoryCard {...story} />}
+      {!isLoading && !isError && story.story && (
+        <StoryCard {...story} isNewStory />
+      )}
     </section>
   );
 }

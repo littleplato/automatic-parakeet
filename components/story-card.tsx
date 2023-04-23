@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useStoryStore } from '@/src/store';
-import { Plus } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react';
 import { Story } from '@/types/story';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,8 +12,12 @@ import {
 } from '@/components/ui/card';
 import { useToast } from './ui/use-toast';
 
-export default function NewStoryCard(story: Story) {
-  const { addStory } = useStoryStore();
+interface Props extends Story {
+  isNewStory?: boolean;
+}
+
+export default function StoryCard({ isNewStory, ...story }: Props) {
+  const { addStory, removeStory } = useStoryStore();
   const [isSaved, setIsSaved] = useState(false);
   const { toast } = useToast();
 
@@ -25,6 +29,8 @@ export default function NewStoryCard(story: Story) {
     });
   };
 
+  console.log('isNewStory', isNewStory);
+
   return (
     <Card>
       <CardHeader>
@@ -33,10 +39,21 @@ export default function NewStoryCard(story: Story) {
             <CardTitle className="mb-1">{story.title}</CardTitle>
             <CardDescription>{`A ${story.genre} story`}</CardDescription>
           </div>
-          <Button onClick={handleAddStory} variant="outline" disabled={isSaved}>
-            {!isSaved && <Plus className="mr-2 h-4 w-4" />}
-            {isSaved ? 'Saved!' : 'Save story'}
-          </Button>
+          {isNewStory ? (
+            <Button
+              onClick={handleAddStory}
+              variant="outline"
+              disabled={isSaved}
+            >
+              {!isSaved && <Plus className="mr-2 h-4 w-4" />}
+              {isSaved ? 'Saved!' : 'Save story'}
+            </Button>
+          ) : (
+            <Button onClick={() => removeStory(story)} variant="outline">
+              <Minus className="mr-2 h-4 w-4" />
+              Remove
+            </Button>
+          )}
         </div>
       </CardHeader>
       <CardContent>
