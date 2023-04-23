@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { generateURL } from '@/utils/utils';
 
 export default function useGenerateImage() {
@@ -6,7 +6,7 @@ export default function useGenerateImage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const generateImage = async (summary: string) => {
+  const generateImage = useCallback(async (summary: string) => {
     try {
       setIsLoading(true);
       const image = await fetch(generateURL('/api/image', { prompt: summary }));
@@ -18,7 +18,7 @@ export default function useGenerateImage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   return { url, isError, isLoading, generateImage };
 }

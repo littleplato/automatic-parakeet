@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useStoryStore } from '@/src/store';
 import { Minus, Plus } from 'lucide-react';
 import { Story } from '@/types/story';
@@ -20,7 +21,6 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
   const { addStory, removeStory } = useStoryStore();
   const [isSaved, setIsSaved] = useState(false);
   const { toast } = useToast();
-
   const handleAddStory = () => {
     addStory(story);
     setIsSaved(true);
@@ -28,9 +28,6 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
       description: `"${story.title}" is saved to your collection.`,
     });
   };
-
-  console.log('isNewStory', isNewStory);
-
   return (
     <Card>
       <CardHeader>
@@ -57,11 +54,11 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col-reverse md:flex-row space-x-4 ">
+        <div className="flex flex-col-reverse space-x-4 md:flex-row ">
           <div className="md:basis-2/3">{story && <h5>{story.story}</h5>}</div>
           <div className="md:basis-1/3">
             {story.url && (
-              <img
+              <Image
                 className="rounded-md"
                 src={story.url}
                 alt="Story image"

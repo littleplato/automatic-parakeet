@@ -19,7 +19,7 @@ export default function IndexPage() {
   return (
     <section className="container grid items-center pb-8 pt-6 md:py-10">
       <form onSubmit={makeStory}>
-        <div className="flex w-full items-center space-x-2 mt-4">
+        <div className="mt-4 flex w-full items-center space-x-2">
           <Input
             name="prompt"
             type="text"

@@ -9,8 +9,10 @@
   "plugins": ["tailwindcss"],
   "rules": {
     "@next/next/no-html-link-for-pages": "off",
-    "react/jsx-key": "on",
-    "tailwindcss/no-custom-classname": "off"
+    "react/jsx-key": "off",
+    "tailwindcss/no-custom-classname": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error"
   },
   "settings": {
     "tailwindcss": {
