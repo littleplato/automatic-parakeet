@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Skeleton } from './ui/skeleton';
 import { useToast } from './ui/use-toast';
 
 interface Props extends Story {
@@ -57,7 +58,7 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
         <div className="flex flex-col-reverse space-x-4 md:flex-row ">
           <div className="md:basis-2/3">{story && <h5>{story.story}</h5>}</div>
           <div className="md:basis-1/3">
-            {story.url && (
+            {story.url ? (
               <Image
                 className="rounded-md"
                 src={story.url}
@@ -65,6 +66,8 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
                 width="500"
                 height="500"
               />
+            ) : (
+              <Skeleton className="h-full w-full" />
             )}
           </div>
         </div>
