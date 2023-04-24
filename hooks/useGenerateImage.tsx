@@ -6,6 +6,10 @@ export default function useGenerateImage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
+  const resetUrl = () => {
+    setUrl('');
+  };
+
   const generateImage = useCallback(async (summary: string) => {
     try {
       setIsLoading(true);
@@ -20,5 +24,5 @@ export default function useGenerateImage() {
     }
   }, []);
 
-  return { url, isError, isLoading, generateImage };
+  return { url, isError, isLoading, generateImage, resetUrl };
 }

@@ -1,10 +1,14 @@
 import * as React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { AlignLeft } from 'lucide-react';
 import { NavItem } from '@/types/nav';
 import { siteConfig } from '@/config/site';
 import { cn } from '@/lib/utils';
-import { Icons } from '@/components/icons';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 interface MainNavProps {
   items?: NavItem[];
@@ -13,9 +17,35 @@ interface MainNavProps {
 export function MainNav({ items }: MainNavProps) {
   return (
     <div className="flex gap-6 md:gap-10">
+      <div className="sm:hidden">
+        <Popover>
+          <PopoverTrigger>
+            <AlignLeft className="mr-2 h-5 w-5" />
+          </PopoverTrigger>
+          <PopoverContent align="start">
+            {items?.length ? (
+              <nav className="gap-6 sm:flex">
+                {items?.map(
+                  (item, index) =>
+                    item.href && (
+                      <Link
+                        key={index}
+                        href={item.href}
+                        className={cn(
+                          'flex items-center text-lg font-semibold text-muted-foreground sm:text-sm',
+                          item.disabled && 'cursor-not-allowed opacity-80'
+                        )}
+                      >
+                        {item.title}
+                      </Link>
+                    )
+                )}
+              </nav>
+            ) : null}
+          </PopoverContent>
+        </Popover>
+      </div>
       <Link href="/" className="hidden items-center space-x-2 sm:flex">
-        <Image src="/logo.png" alt="logo" width="32" height="32" />
-        {/* <Icons.logo className="h-6 w-6" /> */}
         <span className="hidden font-bold sm:inline-block">
           {siteConfig.name}
         </span>
