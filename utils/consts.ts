@@ -1,11 +1,14 @@
 export const genres = [
   {
-    value: 'horror',
-    name: 'Horror',
+    value: 'crime',
+    name: 'Crime',
   },
+  { value: 'fantasy', name: 'Fantasy' },
   {
-    value: 'heroic',
-    name: 'Heroic',
+    value: 'romantic',
+    name: 'Romance',
   },
-  { value: 'cute', name: 'Cute' },
+  { value: 'science fiction', name: 'Science Fiction' },
+  { value: 'historical fiction', name: 'Historical Fiction' },
+  { value: 'horror', name: 'Horror' },
 ];
