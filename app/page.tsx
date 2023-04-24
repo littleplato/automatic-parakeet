@@ -46,7 +46,7 @@ export default function IndexPage() {
         </div>
       </form>
       <div className="my-4" />
-      {isLoading && `Generating a ${story.genre} story: ${story.title}`}
+      {/* {story.story && `Generating a ${story.genre} story: ${story.title}`} */}
       {isError && 'Something went wrong. Please try again.'}
       {!isError && story.story && <StoryCard {...story} isNewStory />}
     </section>

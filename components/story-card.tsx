@@ -29,6 +29,14 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
       description: `"${story.title}" is saved to your collection.`,
     });
   };
+
+  const handleRemoveStory = () => {
+    removeStory(story);
+    toast({
+      description: `"${story.title}" is removed from your collection.`,
+    });
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -47,7 +55,7 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
               {isSaved ? 'Saved!' : 'Save story'}
             </Button>
           ) : (
-            <Button onClick={() => removeStory(story)} variant="outline">
+            <Button onClick={handleRemoveStory} variant="outline">
               <Minus className="mr-2 h-4 w-4" />
               Remove
             </Button>
@@ -67,7 +75,7 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
                 height="500"
               />
             ) : (
-              <Skeleton className="h-full w-full" />
+              <Skeleton className="h-full max-h-[500px] w-full" />
             )}
           </div>
         </div>
