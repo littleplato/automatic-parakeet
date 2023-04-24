@@ -45,11 +45,11 @@ export function MainNav({ items }: MainNavProps) {
           </PopoverContent>
         </Popover>
       </div>
-      <Link href="/" className="hidden items-center space-x-2 sm:flex">
+      {/* <Link href="/" className="hidden items-center space-x-2 sm:flex">
         <span className="hidden font-bold sm:inline-block">
           {siteConfig.name}
         </span>
-      </Link>
+      </Link> */}
       {items?.length ? (
         <nav className="hidden gap-6 sm:flex">
           {items?.map(

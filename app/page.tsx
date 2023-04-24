@@ -18,7 +18,11 @@ export default function IndexPage() {
   const { makeStory, isLoading, isError, ...story } = useMakeStory();
   return (
     <section className="container grid items-center pb-8 pt-6 md:py-10">
-      <form onSubmit={makeStory}>
+      <h1 className="text-center text-3xl font-bold">Automatic Parakeet</h1>
+      <sub className="text-center text-sm">
+        A little experimental storybook generator
+      </sub>
+      <form className="mt-6" onSubmit={makeStory}>
         <div className="mt-4 flex w-full flex-col items-center space-y-2 md:flex-row md:space-x-2 md:space-y-0">
           <div className="w-full md:basis-2/3">
             <Input
