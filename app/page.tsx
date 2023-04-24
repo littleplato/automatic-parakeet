@@ -15,11 +15,11 @@ import {
 import StoryCard from '@/components/story-card';
 
 export default function IndexPage() {
-  const { handleSubmit, isLoading, isError, ...story } = useMakeStory();
+  const { makeStory, isLoading, isError, ...story } = useMakeStory();
   return (
     <section className="container grid items-center pb-8 pt-6 md:py-10">
-      <form onSubmit={handleSubmit}>
-        <div className="flex w-full items-center space-x-2 mt-4">
+      <form onSubmit={makeStory}>
+        <div className="mt-4 flex w-full items-center space-x-2">
           <Input
             name="prompt"
             type="text"
@@ -46,11 +46,9 @@ export default function IndexPage() {
         </div>
       </form>
       <div className="my-4" />
-      {isLoading && `Generating a ${story.genre} story: ${story.title}`}
+      {/* {story.story && `Generating a ${story.genre} story: ${story.title}`} */}
       {isError && 'Something went wrong. Please try again.'}
-      {!isLoading && !isError && story.story && (
-        <StoryCard {...story} isNewStory />
-      )}
+      {!isError && story.story && <StoryCard {...story} isNewStory />}
     </section>
   );
 }

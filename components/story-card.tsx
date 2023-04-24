@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useStoryStore } from '@/src/store';
 import { Minus, Plus } from 'lucide-react';
 import { Story } from '@/types/story';
@@ -10,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Skeleton } from './ui/skeleton';
 import { useToast } from './ui/use-toast';
 
 interface Props extends Story {
@@ -20,7 +22,6 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
   const { addStory, removeStory } = useStoryStore();
   const [isSaved, setIsSaved] = useState(false);
   const { toast } = useToast();
-
   const handleAddStory = () => {
     addStory(story);
     setIsSaved(true);
@@ -29,7 +30,12 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
     });
   };
 
-  console.log('isNewStory', isNewStory);
+  const handleRemoveStory = () => {
+    removeStory(story);
+    toast({
+      description: `"${story.title}" is removed from your collection.`,
+    });
+  };
 
   return (
     <Card>
@@ -49,7 +55,7 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
               {isSaved ? 'Saved!' : 'Save story'}
             </Button>
           ) : (
-            <Button onClick={() => removeStory(story)} variant="outline">
+            <Button onClick={handleRemoveStory} variant="outline">
               <Minus className="mr-2 h-4 w-4" />
               Remove
             </Button>
@@ -57,17 +63,19 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col-reverse md:flex-row space-x-4 ">
+        <div className="flex flex-col-reverse space-x-4 md:flex-row ">
           <div className="md:basis-2/3">{story && <h5>{story.story}</h5>}</div>
           <div className="md:basis-1/3">
-            {story.url && (
-              <img
+            {story.url ? (
+              <Image
                 className="rounded-md"
                 src={story.url}
                 alt="Story image"
                 width="500"
                 height="500"
               />
+            ) : (
+              <Skeleton className="h-full max-h-[500px] w-full" />
             )}
           </div>
         </div>
