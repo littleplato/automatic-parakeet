@@ -63,8 +63,10 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col-reverse space-x-4 md:flex-row ">
-          <div className="md:basis-2/3">{story && <h5>{story.story}</h5>}</div>
+        <div className="flex flex-col-reverse md:flex-row md:space-x-4">
+          <div className="mt-4 md:mt-0 md:basis-2/3">
+            {story && <h5>{story.story}</h5>}
+          </div>
           <div className="md:basis-1/3">
             {story.url ? (
               <Image
