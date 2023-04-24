@@ -40,26 +40,28 @@ export default function StoryCard({ isNewStory, ...story }: Props) {
   return (
     <Card>
       <CardHeader>
-        <div className="flex">
+        <div className="flex-col sm:flex sm:flex-row">
           <div className="grow">
             <CardTitle className="mb-1">{story.title}</CardTitle>
             <CardDescription>{`A ${story.genre} story`}</CardDescription>
           </div>
-          {isNewStory ? (
-            <Button
-              onClick={handleAddStory}
-              variant="outline"
-              disabled={isSaved}
-            >
-              {!isSaved && <Plus className="mr-2 h-4 w-4" />}
-              {isSaved ? 'Saved!' : 'Save story'}
-            </Button>
-          ) : (
-            <Button onClick={handleRemoveStory} variant="outline">
-              <Minus className="mr-2 h-4 w-4" />
-              Remove
-            </Button>
-          )}
+          <div className="my-2 sm:my-0">
+            {isNewStory ? (
+              <Button
+                onClick={handleAddStory}
+                variant="outline"
+                disabled={isSaved}
+              >
+                {!isSaved && <Plus className="mr-2 h-4 w-4" />}
+                {isSaved ? 'Saved!' : 'Save story'}
+              </Button>
+            ) : (
+              <Button onClick={handleRemoveStory} variant="outline">
+                <Minus className="mr-2 h-4 w-4" />
+                Remove
+              </Button>
+            )}
+          </div>
         </div>
       </CardHeader>
       <CardContent>

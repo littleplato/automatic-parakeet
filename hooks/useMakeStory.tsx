@@ -3,7 +3,12 @@ import { generateURL, generateUUID } from '@/utils/utils';
 import useGenerateImage from './useGenerateImage';
 
 export default function useMakeStory() {
-  const { generateImage, url, isLoading: isImageLoading } = useGenerateImage();
+  const {
+    generateImage,
+    url,
+    isLoading: isImageLoading,
+    resetUrl,
+  } = useGenerateImage();
   const [story, setStory] = useState('');
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
@@ -29,6 +34,7 @@ export default function useMakeStory() {
       return;
     }
     setStory('');
+    resetUrl();
     setTitle(prompt);
     setGenre(type);
     try {
